@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* FONTS */
+
+@font-face {
+    font-family: "chakra-regular";
+    src: url("../public/fonts/ChakraPetch-Regular.ttf") format("opentype");
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: "chakra-light";
+    src: url("../public/fonts/ChakraPetch-Light.ttf") format("opentype");
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: "chakra-medium";
+    src: url("../public/fonts/ChakraPetch-Medium.ttf") format("opentype");
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: "chakra-semibold";
+    src: url("../public/fonts/ChakraPetch-SemiBold.ttf") format("opentype");
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: "chakra-bold";
+    src: url("../public/fonts/ChakraPetch-Bold.ttf") format("opentype");
+    font-style: normal;
+    font-display: swap;
+  }
+
+::selection {
+  background-color: #bbff34;
+  color: #141D2B;
+}
