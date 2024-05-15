@@ -1,4 +1,4 @@
-import { IButton } from "../../interfaces/IButton";
+import { IButton } from "../../../interfaces/IButton";
 
 function Button({text, handleFunction} : IButton) {
     return(

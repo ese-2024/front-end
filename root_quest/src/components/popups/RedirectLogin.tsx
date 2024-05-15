@@ -1,10 +1,7 @@
-import Button from "../global/Button";
+import ButtonRedirect from "../global/buttons/ButtonRedirect";
 
 function RedirectLogin() {
 
-    const handleClick = () => {
-        console.log('teste')
-    }
 
     return (
         <div className="w-full h-full flex items-center justify-center flex-col">
@@ -12,8 +9,8 @@ function RedirectLogin() {
                 Para acessar a trilha, faça login para melhorar o gerenciamento do seu progresso. Vamos pra cima?
             </div>
             <div className="w-full mt-4 h-12 gap-x-5 flex items-center justify-between">
-                <Button text="Não Tenho Conta" handleFunction={handleClick}/>
-                <Button text="Fazer Login" handleFunction={handleClick}/>
+                <ButtonRedirect pathBack="/login" text="Não Tenho Conta" />
+                <ButtonRedirect pathBack="/login" text="Fazer Login" />
             </div>
         </div>
     )

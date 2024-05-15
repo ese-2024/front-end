@@ -4,6 +4,7 @@ import { useState } from "react";
 import Popup from "../components/global/PopupBase";
 import RedirectLogin from "../components/popups/RedirectLogin";
 import Card from "../components/global/Card";
+import ButtonHulk from "../components/global/buttons/ButtonHulk";
 
 function Home() {
 
@@ -25,7 +26,9 @@ function Home() {
                         Desbloqueie o Poder <br/> dos Comandos <br/><span className="text-hulk">Linux</span>.
                     </div>
                     <div className="h-24 w-8/12 font-chakra-bold text-4xl text-textC uppercase"><TypeAndDelete text="Pratique assuntos complexos de Forma Prática e Divertida!" /></div>
-                    <button className="bg-hulk px-8 h-11 flex items-center justify-center rounded-md font-chakra-semibold text-lg text-colorBase hover:opacity-90">Ir para minha trilha</button>
+                    <div>
+                        <ButtonHulk text="Ir para minha trilha"/>
+                    </div>
                 </div>
                 <div className="w-4/12 h-5/6 flex items-end justify-end">
                     <img src={LogoLinux}></img>    

@@ -4,7 +4,7 @@ import Ranking from "./pages/Ranking";
 import Page404 from "./pages/Page404";
 import Base from "./pages/Base";
 import Battle from "./pages/Battle";
-// import Page404 from "./pages/Page404";
+import Login from "./pages/Login";
 
 function AppRoutes() {
     return (
@@ -14,6 +14,7 @@ function AppRoutes() {
                     <Route index element={<Home/>}></Route>
                     <Route path="/ranking" element={<Ranking/>}></Route>
                     <Route path="/batlle" element={<Battle/>}></Route>
+                    <Route path="/login" element={<Login/>}></Route>
                     <Route path="*" element={ <Page404 /> }></Route>
                 </Route>
             </Routes>
