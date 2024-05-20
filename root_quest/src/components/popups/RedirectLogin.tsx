@@ -9,7 +9,7 @@ function RedirectLogin() {
                 Para acessar a trilha, faça login para melhorar o gerenciamento do seu progresso. Vamos pra cima?
             </div>
             <div className="w-full mt-4 h-12 gap-x-5 flex items-center justify-between">
-                <ButtonRedirect pathBack="/login" text="Não Tenho Conta" />
+                <ButtonRedirect pathBack="/register" text="Não Tenho Conta" />
                 <ButtonRedirect pathBack="/login" text="Fazer Login" />
             </div>
         </div>

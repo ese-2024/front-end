@@ -24,7 +24,10 @@ export default {
       },
       screens: {
         'break': '1600px',
-      }
+      },
+      scale: {
+        "99": "0.99" 
+      },
     },
   },
   plugins: [],

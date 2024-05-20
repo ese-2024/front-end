@@ -5,6 +5,7 @@ import Page404 from "./pages/Page404";
 import Base from "./pages/Base";
 import Battle from "./pages/Battle";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function AppRoutes() {
     return (
@@ -15,6 +16,7 @@ function AppRoutes() {
                     <Route path="/ranking" element={<Ranking/>}></Route>
                     <Route path="/batlle" element={<Battle/>}></Route>
                     <Route path="/login" element={<Login/>}></Route>
+                    <Route path="/register" element={<Register/>}></Route>
                     <Route path="*" element={ <Page404 /> }></Route>
                 </Route>
             </Routes>

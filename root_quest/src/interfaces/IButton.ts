@@ -14,4 +14,5 @@ export interface IBack {
 
 export interface IButtonHulk {
     text: string;
+    handleFunction: () => void;
 }

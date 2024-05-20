@@ -13,9 +13,13 @@ function Home() {
         setIsViewLogin((prev) => !prev);
     }
 
+    const consoleF = () => {
+        console.log("Clicou");
+    }
+
     return (
         <div className="bg-colorBase h-full w-full flex justify-start items-center flex-col">
-            <div className="pt-10 w-11/12 flex items-center justify-between h-24">
+            <div className="pt-8 2xl:pt-10 w-11/12 flex items-center justify-between h-24 ">
                 <h1 className="font-chakra-medium text-4xl text-hulk uppercase">ROOT QUEST</h1>
                 <button className="w-32 h-11 border-[3px] border-hulk rounded-lg flex items-center justify-center font-chakra-medium hover:font-chakra-semibold
                  text-hulk text-lg hover:bg-hulk transition-all ease-in hover:text-colorBase" onClick={handlePopupLogin}>Login</button>
@@ -27,7 +31,7 @@ function Home() {
                     </div>
                     <div className="h-24 w-8/12 font-chakra-bold text-4xl text-textC uppercase"><TypeAndDelete text="Pratique assuntos complexos de Forma Prática e Divertida!" /></div>
                     <div>
-                        <ButtonHulk text="Ir para minha trilha"/>
+                        <ButtonHulk text="Ir para minha trilha" handleFunction={consoleF}/>
                     </div>
                 </div>
                 <div className="w-4/12 h-5/6 flex items-end justify-end">
