@@ -2,11 +2,12 @@ import Back from "../components/global/Back";
 import ouro from "../../public/icons/ranking/ouro.png";
 import prata from "../../public/icons/ranking/prata.png";
 import bronze from "../../public/icons/ranking/bronze.png";
+import Table from "../components/global/table/Table";
 
 function Ranking() {
 
     return (
-        <div className="bg-colorBase h-full w-full flex justify-start items-center flex-col">
+        <div className="bg-colorBase h-full w-full flex justify-start items-center flex-col overflow-y-auto">
             <div className="pt-8 2xl:pt-10 w-11/12 flex items-center justify-between h-[87px]">
                 <h1 className="font-chakra-medium text-4xl text-hulk uppercase">ROOT QUEST - RANKING</h1>
                 <Back pathBack="/"/>
@@ -44,6 +45,9 @@ function Ranking() {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="w-full flex items-center justify-center">
+               <Table/>
             </div>
            
         </div>

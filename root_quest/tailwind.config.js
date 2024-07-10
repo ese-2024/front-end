@@ -26,7 +26,8 @@ export default {
         'break': '1600px',
       },
       scale: {
-        "99": "0.99" 
+        "99": "0.99", 
+        'customScale': '1.01', // Substitua o valor conforme necessário
       },
     },
   },

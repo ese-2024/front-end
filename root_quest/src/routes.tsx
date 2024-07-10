@@ -14,7 +14,7 @@ function AppRoutes() {
                 <Route path="/" element={<Base/>}>
                     <Route index element={<Home/>}></Route>
                     <Route path="/ranking" element={<Ranking/>}></Route>
-                    <Route path="/batlle" element={<Battle/>}></Route>
+                    <Route path="/battle" element={<Battle/>}></Route>
                     <Route path="/login" element={<Login/>}></Route>
                     <Route path="/register" element={<Register/>}></Route>
                     <Route path="*" element={ <Page404 /> }></Route>
