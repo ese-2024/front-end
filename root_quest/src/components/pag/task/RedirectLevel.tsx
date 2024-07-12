@@ -9,8 +9,8 @@ function RedirectLevel() {
                 Neste nível abordaremos questões sobre lorem ipsum dolor sit amet, consectetur adipiscing elit. Eaí, pra onde vamos agora?   
             </div>
             <div className="w-full mt-4 h-12 gap-x-5 flex items-center justify-between">
-                <ButtonRedirect pathBack="/register" text="Tutorial" />
-                <ButtonRedirect pathBack="/login" text="Prático" />
+                <ButtonRedirect pathBack="/tutorial" text="Tutorial" />
+                <ButtonRedirect pathBack="/practice" text="Prático" />
             </div>
         </div>
     )
