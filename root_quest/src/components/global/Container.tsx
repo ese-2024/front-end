@@ -12,4 +12,4 @@ function Container({ children } : ContainerI) {
     )
 }
 
-export default Container
+export default Container;

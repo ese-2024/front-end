@@ -20,8 +20,8 @@ function Popup({ onClose, children }: IPopup){
   }, [onClose]);
 
   return (
-    <div className="top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 absolute z-50"> 
-      <div ref={popupRef} className="bg-white rounded-2xl">
+    <div className="top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 absolute z-50 text-hulk"> 
+      <div ref={popupRef} className="rounded-2xl">
         {children}
       </div>
     </div>

@@ -2,16 +2,17 @@ import { ReactNode } from "react";
 
 interface ITablePt {
     command?: string;
+    type?: string;
     textButton1: string;
     textButton2: string;
     children: ReactNode
 }
 
-function TablePT({command, textButton1, textButton2, children}: ITablePt) {
+function TablePT({command, type, textButton1, textButton2, children}: ITablePt) {
     return (
         <div className="w-full bg-colorSide rounded-xl flex flex-col mb-10">
             <div className="w-full h-20 flex items-center gap-x-4 font-chakra-medium text-hulk uppercase text-2xl px-8 ">
-                <h3>COMANDO:</h3>
+                <h3>{type}:</h3>
                 <h3 className="font-chakra-bold">{command}</h3>
             </div>
             <div className="w-full h-[1px] bg-textC"></div>
