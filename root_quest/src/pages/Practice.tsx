@@ -1,21 +1,119 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import BackIcon from "../../public/icons/BackIcon";
 import Popup from "../components/global/PopupBase";
 import Card from "../components/global/Card";
 import Lesson from "../components/pag/Lesson/RedirectLesson";
 import TablePT from "../components/global/TablePT";
-import Example from "../components/pag/Lesson/Example";
 import CardTask from "../components/global/CardTask";
+import { getChallenges } from "../integration/Challenge";
+
+interface IChallenge {
+    id: number;
+    title: string;
+    description: string;
+    level: number;
+    necessaryKnowledges: {
+        id: number;
+        knowledge: string;
+    }[];
+    materials: {
+        id: number;
+        title: string;
+        link: string;
+    }[];
+    quests: {
+        id: number;
+        title: string;
+        description: string;
+        isCompleted: boolean;
+        order: number;
+        steps: {
+            id: number;
+            description: string;
+            expectedAnswer: string;
+            command: string;
+            isCompleted: boolean;
+            order: number;
+        }[];
+    }[];
+}
+
+interface IQuest {
+    id: number;
+    title: string;
+    description: string;
+    isCompleted: boolean;
+    order: number;
+    steps: {
+        id: number;
+        description: string;
+        expectedAnswer: string;
+        command: string;
+        isCompleted: boolean;
+        order: number;
+    }[];
+}
+interface IKnowledge {
+    id: number; 
+    knowledge: string;
+}
 
 function Practice() {
-
+    const [accept, setAccept] = useState(false);
     const [back, setBack] = useState(false);
+    const [searchParams] = useSearchParams();
+    const questId = searchParams.get('questId');
+    const order = searchParams.get('order');
+    const levelId = questId ? parseInt(questId, 10) : null;
+    let levelIdTrue = 0;
+    let propsNumberLevel = 0;
 
-    const items = [
-        { text: 'Utilizando o comando ls -l, verifique as permissões atuais do arquivo dados.txt.' },
-        { text: 'Utilize o comando chmod para configurar as permissões corretas para o arquivo dados.txt de acordo com as especificações acima.' },
-        { text: 'Após aplicar as permissões, verifique novamente as permissões do arquivo para garantir que foram configuradas corretamente.' }
-      ];
+    if (levelId !== null && !isNaN(levelId)) {
+        levelIdTrue = Math.ceil(levelId / 5);
+        propsNumberLevel = levelId;
+    } else {
+        console.error("Failed to parse 'order' as a valid integer:", levelId);
+    }
+
+    useEffect(() => {
+        if (questId && order) {
+            console.log('id geral: ' + questId + ' / ordem interno no nivel: ' + order + ' / nivel: ' + levelIdTrue);
+        }
+    }, [questId, order]);
+
+    const [challenges, setChallenges] = useState<IChallenge[]>([]);
+    const [selectedQuest, setSelectedQuest] = useState<IQuest | null>(null);
+    const [knowledge, setKnowledge] = useState<IKnowledge[]>([]);
+
+    useEffect(() => {
+        const fetchChallenges = async () => {
+            try {
+                const data = await getChallenges();
+                setChallenges(data);
+                setKnowledge(data[levelIdTrue - 1].necessaryKnowledges)
+                if (questId && order && levelIdTrue) {
+                    const challenge = data.find(challenge => challenge.level === levelIdTrue);
+                    if (challenge) {
+                        const quest = challenge.quests.find(q => q.id === parseInt(questId, 10) && q.order === parseInt(order, 10));
+                        if (quest) {
+                            setSelectedQuest(quest);
+                        } else {
+                            console.error('Quest not found');
+                        }
+                    } else {
+                        console.error('Challenge not found');
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to fetch challenges:', error);
+            }
+        };
+
+        fetchChallenges();
+    }, [questId, order, levelIdTrue]);
+
+    console.log(questId);
 
     return (
         <div className="bg-colorBase h-full w-full flex justify-start items-center flex-col overflow-y-auto">
@@ -26,10 +124,25 @@ function Practice() {
                 </button>
             </div>
             <div className="w-11/12 flex flex-col items-center justify-center gap-y-16 mt-10">
-            <TablePT type="Nível 1" command="Chmod" textButton1="Cancelar" textButton2="Próximo Nível" children={<CardTask description="Você está trabalhando em um sistema Linux e precisa configurar 
-                as permissões de acesso para um arquivo chamado dados.txt de forma que apenas o proprietário possa ler, escrever e executar 
-                o arquivo, enquanto o grupo associado ao arquivo possa apenas ler e executar, e os outros usuários não tenham permissão de 
-                acesso." items={items}/>}/>
+            {selectedQuest ? (
+                    <TablePT
+                        type={`Nível ${levelIdTrue}`}
+                        command={selectedQuest.steps[0].command}
+                        textButton1="Cancelar"
+                        textButton2="Próximo Nível"
+                        knowledge={knowledge}
+                        accept={accept} // Pass the accept state here
+                        children={
+                            <CardTask
+                                questId={propsNumberLevel}
+                                description={selectedQuest.description}
+                                onAcceptChange={setAccept} // Pass the callback here
+                            />
+                        }
+                    />
+                ) : (
+                    <p className="font-chakra-regular text-center text-lg text-hulk">Loading quest...</p>
+                )}
             </div>
             {back && (
                 <Popup onClose={() => setBack(false)}>

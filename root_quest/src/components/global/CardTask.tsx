@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Check from '../../../public/icons/Check';
+import { postCheckAnswer } from '../../integration/CheckAnswer';
 
 interface ListItem {
     text: string;
@@ -7,12 +8,37 @@ interface ListItem {
 
 interface CardTaskI {
     description: string;
-    items: ListItem[];
+    items?: ListItem[];
+    questId: number;
+    onAcceptChange: (accept: boolean) => void; // Add this line
 }
 
-function CardTask({description, items} : CardTaskI) {
+
+function CardTask({description, questId, onAcceptChange } : CardTaskI) {
 
     const [accept , setAccept] = useState(false);
+    const [answer, setAnswer] = useState<string>('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+
+    const handleAnswer = (event: ChangeEvent<HTMLInputElement>) => {
+        setAnswer(event.target.value);
+    };
+
+    const handleCheck = async () => {
+        setLoading(true);
+        try {
+          await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
+          const response = await postCheckAnswer({ stepId: questId, submittedAnswer: answer });
+          setAccept(true);
+          onAcceptChange(true); // Call the callback with the new state
+        } catch (error) {
+          setError(true);
+          onAcceptChange(false); // Call the callback with the new state
+        } finally {
+          setLoading(false);
+        }
+      };
 
     return (
         <div className="w-full">
@@ -20,17 +46,12 @@ function CardTask({description, items} : CardTaskI) {
                 <p className="font-chakra-medium text-xl text-hulk">Prática:</p>
                 <Check fill={ accept ? '#BBFF34' : '#fff'}/>
             </div>
-            <div className="w-full min-h-40 mt-2 flex items-center flex-col bg-colorPopup rounded-lg">
-                <p className="w-[96%] font-chakra-regular text-textC text-lg mt-4">{description}</p>
-                <ol className="font-chakra-regular text-lg text-textC mt-3 mb-8 list-decimal">
-                    {items.map((item, index) => (
-                        <li key={index}>{item.text}</li>
-                    ))}
-                </ol>
+            <div className="w-full mt-2 flex items-center flex-col bg-colorPopup rounded-lg">
+                <p className="w-[96%] font-chakra-regular text-textC text-lg mt-4 mb-5">{description}</p>
                 <div className="flex items-center justify-between w-[96%] gap-x-10"> 
-                    <input type='text' className="w-3/4 h-9 flex items-center bg-colorSide rounded-md border-[1px] border-lineBorder font-chakra-regular text-textC px-8 mb-6 focus:outline-none"></input>
-                    <button className="w-1/4 h-9 uppercase text-lg bg-colorSide rounded-md border-[1px] border-lineBorder font-chakra-regular text-hulk hover:bg-colorPopup transition-all ease-in-out mb-6" onClick={() => setAccept((prev) => !prev)}>
-                        Check
+                    <input type='text' className="w-3/4 h-9 flex items-center bg-colorSide rounded-md border-[1px] border-lineBorder font-chakra-regular text-textC px-8 mb-6 focus:outline-none" value={answer} onChange={handleAnswer}></input>
+                    <button className="w-1/4 h-9 uppercase text-lg bg-colorSide rounded-md border-[1px] border-lineBorder font-chakra-regular text-hulk hover:bg-colorPopup transition-all ease-in-out mb-6" onClick={handleCheck} disabled={loading}>
+                        {loading ? 'Checking...' : 'Check'}
                     </button>
                 </div>
             </div>

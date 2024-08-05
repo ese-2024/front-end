@@ -43,3 +43,18 @@
   background-color: #bbff34;
   color: #141D2B;
 }
+
+::-webkit-scrollbar {
+  width: 8px; /* Largura da barra de rolagem */
+}
+
+/* Estilizando o botão de rolagem */
+::-webkit-scrollbar-thumb {
+  background-color: #383b49; /* Cor do botão de rolagem */
+  border-radius: 4px; /* Borda arredondada */
+}
+
+/* Estilizando a barra de rolagem quando o cursor está sobre ela */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #adadad; /* Cor do botão de rolagem quando o cursor está sobre ela */
+}
