@@ -1,5 +1,5 @@
 interface TableItemI {
-    data: string[];
+    data: any[];
     rowIndex: number;
 }
 
@@ -10,7 +10,7 @@ function TableItem({data, rowIndex}: TableItemI){
     return (
         <div className={`w-full h-12 flex items-center justify-between gap-x-14 ${backgroundColor} hover:scale-customScale`}>
            {data.map((item, index) => (
-                <p key={index} className="w-full flex items-center justify-center font-chakra-regular text-lg text-textC">{item}</p>
+                <p key={index} className="w-full  text-center font-chakra-regular text-lg text-textC text-ellipsis text-nowrap overflow-hidden whitespace-nowrap uppercase">{item}</p>
             ))}
         </div>
     )

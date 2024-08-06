@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface IButton {
     text: string;
     handleFunction: () => void;
@@ -13,6 +15,7 @@ export interface IBack {
 }
 
 export interface IButtonHulk {
-    text: string;
+    text: ReactNode; // Atualizado para ReactNode
     handleFunction: () => void;
+    disabled?: boolean;
 }
