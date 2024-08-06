@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom"; // Adicione useNavigate para redirecionamento
 import BackIcon from "../../public/icons/BackIcon";
 import Popup from "../components/global/PopupBase";
 import Card from "../components/global/Card";
@@ -61,6 +61,7 @@ interface IKnowledge {
 
 function Practice() {
     const [accept, setAccept] = useState(false);
+    const [error, setError] = useState(false);
     const [back, setBack] = useState(false);
     const [searchParams] = useSearchParams();
     const questId = searchParams.get('questId');
@@ -68,6 +69,7 @@ function Practice() {
     const levelId = questId ? parseInt(questId, 10) : null;
     let levelIdTrue = 0;
     let propsNumberLevel = 0;
+    const navigate = useNavigate();
 
     if (levelId !== null && !isNaN(levelId)) {
         levelIdTrue = Math.ceil(levelId / 5);
@@ -75,12 +77,6 @@ function Practice() {
     } else {
         console.error("Failed to parse 'order' as a valid integer:", levelId);
     }
-
-    useEffect(() => {
-        if (questId && order) {
-            console.log('id geral: ' + questId + ' / ordem interno no nivel: ' + order + ' / nivel: ' + levelIdTrue);
-        }
-    }, [questId, order]);
 
     const [challenges, setChallenges] = useState<IChallenge[]>([]);
     const [selectedQuest, setSelectedQuest] = useState<IQuest | null>(null);
@@ -113,7 +109,24 @@ function Practice() {
         fetchChallenges();
     }, [questId, order, levelIdTrue]);
 
-    console.log(questId);
+    // Função para resetar estados
+    const resetStates = () => {
+        setAccept(false);
+        setError(false);
+    };
+
+    // Função para passar o nível
+    const handlePassLevel = () => {
+        resetStates();
+        if (order) {
+            const nextQuestId = (propsNumberLevel + 1).toString();
+            const nextOrder = (parseInt(order, 10) + 1).toString();
+            navigate(`/practice?questId=${nextQuestId}&order=${nextOrder}`);
+        } else {
+            console.error("Order is null");
+        }
+    };
+
 
     return (
         <div className="bg-colorBase h-full w-full flex justify-start items-center flex-col overflow-y-auto">
@@ -131,12 +144,16 @@ function Practice() {
                         textButton1="Cancelar"
                         textButton2="Próximo Nível"
                         knowledge={knowledge}
-                        accept={accept} // Pass the accept state here
+                        accept={accept}
+                        errorState={error}
+                        on2={handlePassLevel}
+                        isButton2Disabled={!accept} // Passando a prop
                         children={
                             <CardTask
                                 questId={propsNumberLevel}
                                 description={selectedQuest.description}
                                 onAcceptChange={setAccept} // Pass the callback here
+                                onErrorState={setError}
                             />
                         }
                     />
@@ -146,7 +163,6 @@ function Practice() {
             </div>
             {back && (
                 <Popup onClose={() => setBack(false)}>
-                    {/* <RedirectLogin/> */}
                     <Card title="Voltar" onClose={() => setBack(false)} children={<Lesson onClose={() => setBack(false)}/>}/>
                 </Popup>
             )}

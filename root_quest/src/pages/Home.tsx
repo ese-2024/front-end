@@ -8,8 +8,6 @@ import ButtonHulk from "../components/global/buttons/ButtonHulk";
 import { useNavigate } from 'react-router-dom';
 import Cookie from 'js-cookie';
 
-
-
 function Home() {
 
     const [isViewLogin, setIsViewLogin] = useState(false);

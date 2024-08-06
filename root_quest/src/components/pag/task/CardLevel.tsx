@@ -30,25 +30,28 @@ interface CardLevelI {
 
 function CardLevel({ quest, open }: CardLevelI) {
   const [isChoose, setChoose] = useState(false);
+
   const handleViewChoose = () => {
-    setChoose((prev) => !prev);
+    if (!open) {
+      setChoose((prev) => !prev);
+    }
   };
 
   return (
     <div>
       <div
-        className="w-full h-16 rounded-lg bg-colorPopup flex items-center justify-between hover:scale-customScale transition-all ease-in-out px-8"
+        className={`w-full h-16 rounded-lg flex items-center justify-between px-8 transition-all ease-in-out ${open ? 'bg-colorPopup cursor-not-allowed' : 'bg-colorPopup hover:scale-customScale cursor-pointer'}`}
         onClick={handleViewChoose}
       >
-        <p className="uppercase font-chakra-regular text-lg text-textC">{quest.title}</p>
+        <p className={`uppercase font-chakra-regular text-lg ${open ? 'text-gray-400' : 'text-textC'}`}>{quest.title}</p>
         {open ? <LockGreen /> : <Lock />}
       </div>
-      {isChoose && (
+      {isChoose && !open && (
         <Popup onClose={handleViewChoose}>
           <Card
             title={`${quest.title}`}
             onClose={handleViewChoose}
-            children={<RedirectLevel questId={quest.id} order={quest.order} />}
+            children={<RedirectLevel questId={quest.id} order={quest.order} command={quest.steps[0].command} />}
           />
         </Popup>
       )}

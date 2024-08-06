@@ -18,7 +18,8 @@ export const postCheckAnswer = async ({stepId, submittedAnswer} : ICheckAnswer) 
       method: 'POST',
       url: 'Step/submit',
       headers: {
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
       },
       data: {
         stepId,

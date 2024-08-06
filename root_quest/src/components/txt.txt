@@ -11,11 +11,11 @@ interface CardTaskI {
     items?: ListItem[];
     questId: number;
     onAcceptChange: (accept: boolean) => void; // Add this line
-    onErrorState: (error: boolean) => void;
+    onError: (error: boolean) => void;
 }
 
 
-function CardTask({description, questId, onAcceptChange, onErrorState } : CardTaskI) {
+function CardTask({description, questId, onAcceptChange, onError } : CardTaskI) {
 
     const [accept , setAccept] = useState(false);
     const [answer, setAnswer] = useState<string>('');
@@ -33,12 +33,11 @@ function CardTask({description, questId, onAcceptChange, onErrorState } : CardTa
           const response = await postCheckAnswer({ stepId: questId, submittedAnswer: answer });
           setAccept(true);
           onAcceptChange(true); // Call the callback with the new state
-          onErrorState(false);
-          onErrorState(false);
+          onError(false)
         } catch (error) {
           setError(true);
           onAcceptChange(false); // Call the callback with the new state
-          onErrorState(true)
+          onError(true)
         } finally {
           setLoading(false);
         }
